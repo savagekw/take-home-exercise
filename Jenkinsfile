@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "domingocooler/homelab-spinnaker"
-        registryCredential = "homelab01-dockerhub"
+        registryCredential = "dockerhub"
         dockerImage = ""
   }
     agent any
@@ -20,7 +20,7 @@ pipeline {
     }
         stage('Login') {
             steps {
-                sh 'echo $HOMELAB01-DOCKERHUB_CREDENTIALS_PSW | docker login -u $HOMELAB01-DOCKERHUB_CREDENTIALS_USR --password-stdin'
+                sh 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
       }
     }
         stage ('Code Build') {
