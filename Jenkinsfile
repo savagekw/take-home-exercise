@@ -18,7 +18,11 @@ pipeline {
                 ''' 
             }
         }
-
+        stage('Login') {
+            steps {
+                sh 'echo $HOMELAB01-DOCKERHUB_CREDENTIALS_PSW | docker login -u $HOMELAB01-DOCKERHUB_CREDENTIALS_USR --password-stdin'
+            }
+        }
         stage ('Code Build') {
             steps {
                 sh 'mvn -Dmaven.test.failure.ignore=true package'
@@ -48,6 +52,11 @@ pipeline {
         stage('Remove Unused docker image') {
           steps{
             sh "docker rmi $registry:$BUILD_NUMBER"
+          }
+        }
+        post {
+          always {
+            sh 'docker logout'
           }
         }
     }
