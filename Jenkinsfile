@@ -54,10 +54,10 @@ pipeline {
             sh "docker rmi $registry:$BUILD_NUMBER"
           }
         }
-        post {
-          always {
-            sh 'docker logout'
-          }
-        }
+    post {
+       always {
+          sh 'docker logout'
+       }
+    }
     }
 }
