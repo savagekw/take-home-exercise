@@ -1,7 +1,7 @@
 pipeline {
     environment {
         registry = "domingocooler/homelab-spinnaker"
-        registryCredential = "dockerhub"
+        registryCredential = "homelab01-dockerhub"
         dockerImage = ""
   }
     agent any
