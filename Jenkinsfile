@@ -1,6 +1,6 @@
 pipeline {
     environment {
-        registry = "domingocooler/homelab-spinnaker"
+        registry = "continuouslee/person-api"
         registryCredential = "dockerhub"
         dockerImage = ""
     }
@@ -29,11 +29,6 @@ pipeline {
                 }
             }
         }
-        stage('Login') {
-            steps {
-                sh 'echo $registryCredential_PSW | docker login -u $registryCredential_USR --password-stdin'
-            }
-        }
         stage ('Docker Build') {
             steps {
                 script {
@@ -44,9 +39,9 @@ pipeline {
         stage ('Docker Publish') {
             steps {
                 script {
-//                    docker.withRegistry('', registryCredential) {
+                    docker.withRegistry('', registryCredential) {
                         dockerImage.push()
-//                    }
+                    }
                 }
             }
         }
@@ -55,10 +50,5 @@ pipeline {
             sh "docker rmi $registry:$BUILD_NUMBER"
           }
         }
-    }
-    post {
-       always {
-         sh 'docker logout'
-       }
     }
 }
